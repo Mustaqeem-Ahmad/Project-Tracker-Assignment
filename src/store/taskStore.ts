@@ -1,11 +1,23 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import {
-  Task, Status, ViewType, FilterState, UserPresence, SortState,
+  Task,
+  Status,
+  ViewType,
+  FilterState,
+  UserPresence,
+  SortState,
 } from '../types';
 import { generateTasks } from '../data/generateTasks';
 import { defaultFilters } from '../utils/filterUtils';
 
+/**
+ * Global state for the entire application
+ * Handles:
+ * - task data
+ * - UI state (view, filters, sorting)
+ * - simulated presence
+ */
 interface TaskStore {
   tasks: Task[];
   view: ViewType;
@@ -13,7 +25,7 @@ interface TaskStore {
   presence: UserPresence[];
   sort: SortState;
 
-  setView: (v: ViewType) => void;
+  setView: (view: ViewType) => void;
   updateTaskStatus: (taskId: string, status: Status) => void;
   setFilters: (filters: Partial<FilterState>) => void;
   resetFilters: () => void;
@@ -23,46 +35,86 @@ interface TaskStore {
 
 export const useTaskStore = create<TaskStore>()(
   devtools(
-    (set) => ({
+    (set, get) => ({
+      /**
+       * Initial state
+       * Using generated mock data to simulate real-world scale (500 tasks)
+       */
       tasks: generateTasks(500),
       view: 'kanban',
       filters: defaultFilters,
       presence: [],
       sort: { field: 'dueDate', dir: 'asc' },
 
-      setView: (view) => set({ view }, false, 'setView'),
+      /**
+       * Switch between views (Kanban / List / Timeline)
+       */
+      setView: (view) =>
+        set({ view }, false, 'view/setView'),
 
+      /**
+       * Update task status (used in drag-and-drop)
+       * Only updates the specific task to avoid unnecessary changes
+       */
       updateTaskStatus: (taskId, status) =>
         set(
           (state) => ({
-            tasks: state.tasks.map((t) =>
-              t.id === taskId ? { ...t, status } : t
+            tasks: state.tasks.map((task) =>
+              task.id === taskId
+                ? { ...task, status }
+                : task
             ),
           }),
           false,
-          'updateTaskStatus'
+          'tasks/updateStatus'
         ),
 
-
-      setFilters: (partial) =>
+      /**
+       * Merge new filters with existing ones
+       * Allows partial updates instead of replacing entire object
+       */
+      setFilters: (partialFilters) =>
         set(
-          (state) => ({ filters: { ...state.filters, ...partial } }),
+          (state) => ({
+            filters: { ...state.filters, ...partialFilters },
+          }),
           false,
-          'setFilters'
+          'filters/setFilters'
         ),
 
-
+      /**
+       * Reset filters to default state
+       */
       resetFilters: () =>
-        set({ filters: defaultFilters }, false, 'resetFilters'),
+        set(
+          { filters: defaultFilters },
+          false,
+          'filters/reset'
+        ),
 
+      /**
+       * Update simulated user presence
+       * Used for "live users" feature in UI
+       */
       setPresence: (presence) =>
-        set({ presence }, false, 'setPresence'),
+        set(
+          { presence },
+          false,
+          'presence/set'
+        ),
 
+      /**
+       * Update sorting configuration (List view)
+       */
       setSort: (sort) =>
-        set({ sort }, false, 'setSort'),
+        set(
+          { sort },
+          false,
+          'sort/set'
+        ),
     }),
-    { name: 'TaskStore' }
+    {
+      name: 'TaskStore', // shows in Redux DevTools
+    }
   )
 );
-
-
