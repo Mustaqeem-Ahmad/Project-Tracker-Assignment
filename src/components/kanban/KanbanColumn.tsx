@@ -38,6 +38,7 @@ export const KanbanColumn = React.memo(({ status, tasks }: Props) => {
       setIsDragOver(false);
       setDragHeight(0);
     };
+    
 
     window.addEventListener('drag-start', onDragStart);
     window.addEventListener('drag-over-column', onDragOver);

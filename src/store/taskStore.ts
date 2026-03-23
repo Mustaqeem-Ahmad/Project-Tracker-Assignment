@@ -43,12 +43,14 @@ export const useTaskStore = create<TaskStore>()(
           'updateTaskStatus'
         ),
 
+
       setFilters: (partial) =>
         set(
           (state) => ({ filters: { ...state.filters, ...partial } }),
           false,
           'setFilters'
         ),
+
 
       resetFilters: () =>
         set({ filters: defaultFilters }, false, 'resetFilters'),
@@ -62,3 +64,5 @@ export const useTaskStore = create<TaskStore>()(
     { name: 'TaskStore' }
   )
 );
+
+

@@ -1,92 +1,163 @@
-# Project Tracker
+# Project Tracker 📋
 
-A production-grade React + TypeScript project management app with Kanban, List, and Timeline views.
+hey! this is a project i built to practice React and TypeScript. its basically a task management app where you can see your tasks in 3 different ways. i learned a lot making this so i wanted to document everything properly.
 
-## Features
+---
 
-- **Kanban Board** — Drag & drop cards between 4 columns (custom implementation, no libraries)
-- **List View** — Sortable columns with virtual scrolling for 500+ tasks
-- **Timeline / Gantt** — Current month view with priority-colored task bars
-- **Live Presence** — Simulated real-time user presence with avatar stacks
-- **Filter System** — Multi-filter by status, priority, assignee, date range with URL sync
-- **500+ tasks** — Generated dataset with overdue tasks, missing start dates, all priorities
+## what does it do
 
-## Setup
+so basically you have tasks and you can view them in 3 ways:
 
-### 1. Install Node.js
+- **Kanban view** - the board with 4 columns (To Do, In Progress, In Review, Done). you can drag cards from one column to another which was honestly the hardest part to build
+- **List view** - shows all tasks in a table. you can click the column headers to sort by name, priority or due date. also handles 500+ tasks without slowing down (i learned about virtual scrolling for this!)
+- **Timeline view** - shows tasks as bars on a calendar for the current month, kind of like a gantt chart
 
-Make sure you have **Node.js 18+** installed.
-Download from: https://nodejs.org
+other stuff it does:
+- filter tasks by status, priority, assignee or due date
+- filters save in the URL so if you share the link the filters stay
+- shows fake "live users" in the top bar like they are viewing the board in real time (its just simulated, theres no real backend)
+- overdue tasks show up highlighted in red
+- tasks due today say "Due Today" instead of the date
 
-### 2. Install dependencies
+---
 
-```bash
+## how to run it
+
+first make sure you have **Node.js** installed on your computer. if you dont have it download it from https://nodejs.org (get the LTS version, thats the stable one)
+
+you can check if its already installed by opening terminal and typing:
+```
+node --version
+```
+if it shows a number like `v18.0.0` or higher youre good to go.
+
+**step 1** - extract the zip file somewhere on your computer
+
+**step 2** - open terminal and go into the project folder
+```
+cd project-tracker
+```
+
+**step 3** - install all the packages the project needs (this might take a minute)
+```
 npm install
 ```
 
-This installs:
-- `react` + `react-dom` — UI framework
-- `zustand` — State management
-- `typescript` — Type safety
-- `vite` — Build tool & dev server
-- `tailwindcss` — Utility CSS
-- `autoprefixer` + `postcss` — CSS processing
-- `@vitejs/plugin-react` — React support for Vite
-
-### 3. Start development server
-
-```bash
+**step 4** - start the app
+```
 npm run dev
 ```
 
-Open http://localhost:5173 in your browser.
+now open your browser and go to **http://localhost:5173** and you should see the app!
 
-### 4. Build for production
+to stop the server press `Ctrl + C` in the terminal.
 
-```bash
-npm run build
+---
+
+## packages i used and why
+
+when you run `npm install` it downloads these:
+
+| package | what its for |
+|---|---|
+| react | the main UI library, everything is built with this |
+| react-dom | lets react work in the browser |
+| zustand | for managing state (sharing data between components). i tried useContext first but it kept re-rendering everything so i switched to this |
+| typescript | adds types to javascript so you get errors while coding instead of while running |
+| vite | runs the dev server and builds the project. way faster than create-react-app |
+| tailwindcss | CSS utility classes, instead of writing CSS files you just add classes like `text-red-500` directly in the HTML |
+| autoprefixer | automatically adds `-webkit-` prefixes to CSS so it works in all browsers |
+| postcss | needed for tailwind to work, it processes the CSS |
+| @vitejs/plugin-react | plugin that tells vite how to handle React files |
+
+note: i did NOT use any drag and drop libraries, UI component libraries (like MUI or Chakra), or virtual scroll libraries. everything custom is written from scratch which was the whole point of the project.
+
+---
+
+## folder structure
+
+i tried to keep things organized. heres what everything is:
+
+```
+project-tracker/
+│
+├── index.html              ← the main HTML file, react mounts here
+├── package.json            ← project info and list of packages
+├── vite.config.ts          ← vite configuration
+├── tailwind.config.js      ← tailwind configuration
+├── tsconfig.json           ← typescript configuration
+│
+└── src/
+    ├── main.tsx            ← entry point, starts the React app
+    ├── App.tsx             ← root component, has the header and switches between views
+    ├── index.css           ← global styles and animations
+    │
+    ├── types/
+    │   └── index.ts        ← all TypeScript types in one place (Task, Priority, Status etc)
+    │
+    ├── store/
+    │   └── taskStore.ts    ← zustand store, all the global state lives here
+    │
+    ├── data/
+    │   ├── assignees.ts    ← the 6 fake users with their colors
+    │   └── generateTasks.ts← generates 500 random tasks for testing
+    │
+    ├── hooks/
+    │   ├── useDrag.ts          ← all the drag and drop logic (pointer events)
+    │   ├── useVirtualScroll.ts ← virtual scrolling so list view stays fast
+    │   ├── useFilters.ts       ← filter state + syncing with URL
+    │   └── usePresence.ts      ← simulates live users moving between tasks
+    │
+    ├── utils/
+    │   ├── dateUtils.ts    ← helper functions for dates (is overdue? format date etc)
+    │   └── filterUtils.ts  ← filter and sort logic (pure functions, easy to test)
+    │
+    └── components/
+        ├── shared/
+        │   ├── Avatar.tsx        ← the colored circle with user initials
+        │   ├── PriorityBadge.tsx ← the colored badge (critical/high/medium/low)
+        │   └── ViewSwitcher.tsx  ← the buttons to switch between kanban/list/timeline
+        │
+        ├── kanban/
+        │   ├── KanbanBoard.tsx   ← the 4 column layout
+        │   ├── KanbanColumn.tsx  ← a single column with its cards
+        │   └── TaskCard.tsx      ← individual task card that you drag
+        │
+        ├── list/
+        │   ├── ListView.tsx  ← the table view with sorting and virtual scroll
+        │   └── TaskRow.tsx   ← a single row in the table
+        │
+        ├── timeline/
+        │   └── TimelineView.tsx  ← the gantt chart view
+        │
+        ├── filters/
+        │   └── FilterBar.tsx ← the filter dropdown panel
+        │
+        └── presence/
+            ├── PresenceBar.tsx   ← the "X people online" bar at the top
+            └── PresenceStack.tsx ← the stacked avatars shown on task cards
 ```
 
-## Project Structure
+---
 
-```
-src/
-├── components/
-│   ├── kanban/       KanbanBoard, KanbanColumn, TaskCard
-│   ├── list/         ListView (virtual scroll), TaskRow
-│   ├── timeline/     TimelineView (Gantt chart)
-│   ├── filters/      FilterBar with URL sync
-│   ├── presence/     PresenceBar, PresenceStack
-│   └── shared/       Avatar, PriorityBadge, ViewSwitcher
-├── hooks/
-│   ├── useDrag.ts         Custom drag-and-drop (pointer events)
-│   ├── useVirtualScroll.ts Windowed rendering
-│   ├── useFilters.ts      Filter state + URL sync
-│   └── usePresence.ts     Simulated presence
-├── store/
-│   └── taskStore.ts   Zustand global store
-├── data/
-│   ├── assignees.ts   6 mock users
-│   └── generateTasks.ts  500+ task generator
-├── types/
-│   └── index.ts       All TypeScript types
-└── utils/
-    ├── dateUtils.ts   Date helpers, overdue logic
-    └── filterUtils.ts Filter/sort pure functions
-```
+## things i struggled with and figured out
 
-## Dependencies List
+**drag and drop** - this took the longest. i had to learn about pointer events (pointerdown, pointermove, pointerup). the trick was to clone the card element and move the clone with CSS transform instead of actually moving the real card. also had to make sure setState is never called inside pointermove because that runs 60 times per second and would crash the browser.
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| react | ^18.2.0 | UI framework |
-| react-dom | ^18.2.0 | DOM rendering |
-| zustand | ^4.4.7 | State management |
-| typescript | ^5.2.2 | Type safety |
-| vite | ^5.0.8 | Dev server & bundler |
-| @vitejs/plugin-react | ^4.2.1 | React + Vite integration |
-| tailwindcss | ^3.4.0 | Utility-first CSS |
-| autoprefixer | ^10.4.16 | CSS vendor prefixes |
-| postcss | ^8.4.32 | CSS processing pipeline |
 
-**No UI component libraries. No drag-and-drop libraries. No virtual scroll libraries.**
+**virtual scrolling** - the list view has 500 tasks but if you put all 500 in the DOM the browser slows down. so instead i only render the ~15 tasks you can actually see on screen. when you scroll i calculate which ones should be visible and swap them out. i use two empty divs above and below the visible items to maintain the correct scroll height.
+
+
+**height / scrolling layout** - spent like 2 hours on this. the page was scrolling instead of the columns. turns out the whole CSS height chain needs to be correct: `h-screen` on the root → `flex-1 min-h-0` on every flex child → `overflow-y-auto` on the thing that actually scrolls. if any parent is missing `min-h-0` the whole thing breaks.
+
+
+**URL filter sync** - whenever filters change i update the URL using `window.history.replaceState` so no page reload happens. when the page loads i read the URL and restore the filters. also added a `popstate` listener so browser back/forward buttons work correctly.
+
+---
+
+## if something doesnt work
+
+- make sure youre in the right folder before running commands (should be inside `project-tracker/`)
+- try deleting the `node_modules` folder and running `npm install` again
+- make sure your Node.js version is 18 or higher
+- port 5173 needs to be free, if something else is using it vite will use 5174 instead (it tells you in the terminal)

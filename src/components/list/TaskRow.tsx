@@ -11,6 +11,7 @@ interface Props {
   task: Task;
 }
 
+
 export const TaskRow = React.memo(({ task }: Props) => {
   const updateTaskStatus = useTaskStore(s => s.updateTaskStatus);
   const overdue = task.status !== 'done' && isOverdue(task.dueDate);
@@ -47,6 +48,7 @@ export const TaskRow = React.memo(({ task }: Props) => {
           ))}
         </select>
       </div>
+      
 
       {/* Due date */}
       <div className="w-24 flex-shrink-0 text-right">

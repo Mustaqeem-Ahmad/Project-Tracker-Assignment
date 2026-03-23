@@ -10,6 +10,7 @@ interface Props {
   task: Task;
 }
 
+
 export const TaskCard = React.memo(({ task }: Props) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const { startDrag } = useDrag();
@@ -20,6 +21,7 @@ export const TaskCard = React.memo(({ task }: Props) => {
     if (!cardRef.current) return;
     startDrag(e, task, cardRef.current);
   };
+
 
   return (
     <div
@@ -32,6 +34,7 @@ export const TaskCard = React.memo(({ task }: Props) => {
       `}
       style={{ touchAction: 'none' }}
     >
+      
       {/* Title */}
       <p className="text-sm font-medium text-slate-800 mb-2 leading-snug line-clamp-2">
         {task.title}

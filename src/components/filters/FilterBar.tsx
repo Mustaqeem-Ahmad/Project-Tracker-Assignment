@@ -107,6 +107,7 @@ export const FilterBar = React.memo(() => {
                       : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
                     }`}
                 >
+
                   <span
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: a.color }}
@@ -116,6 +117,7 @@ export const FilterBar = React.memo(() => {
               ))}
             </div>
           </div>
+
 
           {/* Date Range */}
           <div>
@@ -127,6 +129,7 @@ export const FilterBar = React.memo(() => {
                 onChange={e => setFilters({ dueDateFrom: e.target.value || null })}
                 className="flex-1 text-xs border border-slate-200 rounded-md px-2 py-1.5 text-slate-700"
               />
+
               <span className="text-slate-400 self-center">–</span>
               <input
                 type="date"
@@ -134,8 +137,10 @@ export const FilterBar = React.memo(() => {
                 onChange={e => setFilters({ dueDateTo: e.target.value || null })}
                 className="flex-1 text-xs border border-slate-200 rounded-md px-2 py-1.5 text-slate-700"
               />
+
             </div>
           </div>
+          
 
           <button
             onClick={() => setOpen(false)}

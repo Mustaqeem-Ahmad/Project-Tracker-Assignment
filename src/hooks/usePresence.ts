@@ -9,6 +9,7 @@ export function usePresence() {
   const tasks = useTaskStore(s => s.tasks);
   const setPresence = useTaskStore(s => s.setPresence);
 
+
   useEffect(() => {
     const activeTasks = tasks
       .filter(t => t.status !== 'done')
@@ -36,3 +37,5 @@ export function usePresence() {
     return () => clearInterval(interval);
   }, [tasks.length, setPresence]);
 }
+
+

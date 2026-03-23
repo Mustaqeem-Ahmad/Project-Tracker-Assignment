@@ -13,6 +13,7 @@ export function useFilters() {
     if (Object.keys(fromURL).length > 0) {
       setFilters(fromURL);
     }
+
     // Handle browser back/forward
     const onPop = () => {
       const restored = paramsToFilters(window.location.search);
@@ -21,6 +22,7 @@ export function useFilters() {
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []); // eslint-disable-line
+
 
   // Sync filters → URL whenever they change
   useEffect(() => {
@@ -33,3 +35,4 @@ export function useFilters() {
 
   return { filters, setFilters, resetFilters, active };
 }
+

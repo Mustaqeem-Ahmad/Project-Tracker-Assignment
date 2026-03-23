@@ -12,3 +12,4 @@ export const ASSIGNEES: Assignee[] = [
 export const ASSIGNEE_MAP: Record<string, Assignee> = Object.fromEntries(
   ASSIGNEES.map(a => [a.id, a])
 );
+

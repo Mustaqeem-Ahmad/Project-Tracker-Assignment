@@ -11,6 +11,7 @@ const COLUMNS: { field: SortField; label: string; width: string }[] = [
   { field: 'dueDate',  label: 'Due Date', width: 'w-24' },
 ];
 
+
 export const ListView = React.memo(() => {
   const tasks   = useTaskStore(s => s.tasks);
   const filters = useTaskStore(s => s.filters);
@@ -21,6 +22,7 @@ export const ListView = React.memo(() => {
     const filtered = applyFilters(tasks, filters);
     return applySort(filtered, sort);
   }, [tasks, filters, sort]);
+
 
   const { containerRef, handleScroll, visibleStart, visibleEnd,
           totalHeight, offsetTop, offsetBottom } = useVirtualScroll(sortedFiltered.length);
@@ -35,10 +37,12 @@ export const ListView = React.memo(() => {
     }
   };
 
+
   const SortIcon = ({ field }: { field: SortField }) => {
     if (sort.field !== field) return <span className="text-slate-300 ml-1">↕</span>;
     return <span className="text-indigo-500 ml-1">{sort.dir === 'asc' ? '↑' : '↓'}</span>;
   };
+
 
   return (
     <div className="flex flex-col h-full bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
@@ -101,3 +105,4 @@ export const ListView = React.memo(() => {
   );
 });
 ListView.displayName = 'ListView';
+

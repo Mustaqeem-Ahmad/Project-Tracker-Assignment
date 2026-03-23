@@ -12,6 +12,7 @@ export const PresenceStack = React.memo(({ taskId }: Props) => {
     s.presence.filter(p => p.taskId === taskId)
   );
 
+
   if (presence.length === 0) return null;
 
   const visible = presence.slice(0, MAX_VISIBLE);
@@ -44,6 +45,7 @@ export const PresenceStack = React.memo(({ taskId }: Props) => {
         </div>
       )}
     </div>
+    
   );
 });
 PresenceStack.displayName = 'PresenceStack';

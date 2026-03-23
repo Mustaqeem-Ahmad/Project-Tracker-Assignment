@@ -14,6 +14,7 @@ interface DragState {
   placeholderHeight: number;
 }
 
+
 export function useDrag() {
   const dragRef = useRef<DragState | null>(null);
   const updateTaskStatus = useTaskStore(s => s.updateTaskStatus);
@@ -92,6 +93,7 @@ export function useDrag() {
       );
     };
 
+
     const onUp = (e: PointerEvent) => {
       const drag = dragRef.current;
       if (!drag) return;
@@ -116,6 +118,7 @@ export function useDrag() {
       window.dispatchEvent(new CustomEvent('drag-end'));
     };
 
+
     window.addEventListener('pointermove', onMove);
     window.addEventListener('pointerup', onUp);
     return () => {
@@ -123,6 +126,7 @@ export function useDrag() {
       window.removeEventListener('pointerup', onUp);
     };
   }, [updateTaskStatus]);
+
 
   function cleanup() {
     const drag = dragRef.current;
@@ -157,3 +161,5 @@ export function useDrag() {
 
   return { startDrag };
 }
+
+

@@ -11,6 +11,7 @@ const VIEWS: { id: ViewType; label: string; icon: string }[] = [
 export const ViewSwitcher = React.memo(() => {
   const view = useTaskStore(s => s.view);
   const setView = useTaskStore(s => s.setView);
+  
 
   return (
     <div className="flex bg-slate-100 rounded-lg p-1 gap-0.5">

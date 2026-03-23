@@ -9,6 +9,7 @@ export function useVirtualScroll(totalItems: number) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
 
+
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -19,6 +20,7 @@ export function useVirtualScroll(totalItems: number) {
     return () => ro.disconnect();
   }, []);
 
+
   const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
     const top = e.currentTarget.scrollTop;
     cancelAnimationFrame(rafRef.current);
@@ -26,6 +28,7 @@ export function useVirtualScroll(totalItems: number) {
       setScrollTop(top);
     });
   }, []);
+
 
   const visibleStart = Math.max(0, Math.floor(scrollTop / ROW_HEIGHT) - BUFFER);
   const visibleEnd = Math.min(
@@ -43,3 +46,5 @@ export function useVirtualScroll(totalItems: number) {
     offsetBottom: (totalItems - visibleEnd) * ROW_HEIGHT,
   };
 }
+
+

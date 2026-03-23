@@ -11,9 +11,11 @@ const DAY_WIDTH = 38;
 const ROW_HEIGHT = 44;
 const LABEL_WIDTH = 220;
 
+
 function getMonthName(year: number, month: number): string {
   return new Date(year, month, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 }
+
 
 interface BarProps {
   task: Task;
@@ -21,6 +23,7 @@ interface BarProps {
   endOffset: number;
   daysInMonth: number;
 }
+
 
 const TimelineBar = React.memo(({ task, startOffset, endOffset, daysInMonth }: BarProps) => {
   const left  = clamp(startOffset, 0, daysInMonth) * DAY_WIDTH;

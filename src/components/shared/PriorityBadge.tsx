@@ -13,3 +13,4 @@ export const PriorityBadge = React.memo(({ priority }: Props) => {
   );
 });
 PriorityBadge.displayName = 'PriorityBadge';
+

@@ -6,6 +6,7 @@ interface Props {
   size?: 'sm' | 'md';
 }
 
+
 export const Avatar = React.memo(({ assigneeId, size = 'sm' }: Props) => {
   const user = ASSIGNEE_MAP[assigneeId];
   if (!user) return null;

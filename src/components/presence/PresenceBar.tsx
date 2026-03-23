@@ -6,6 +6,7 @@ export const PresenceBar = React.memo(() => {
   const activeCount = presence.filter(p => p.taskId !== null).length;
   const totalCount = presence.length;
 
+
   return (
     <div className="flex items-center gap-3">
       <div className="flex items-center gap-1.5">
@@ -34,3 +35,4 @@ export const PresenceBar = React.memo(() => {
   );
 });
 PresenceBar.displayName = 'PresenceBar';
+
