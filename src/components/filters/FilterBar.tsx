@@ -52,7 +52,7 @@ export const FilterBar = React.memo(() => {
       </div>
 
       {open && (
-        <div className="absolute top-10 left-0 z-50 bg-white border border-slate-200 rounded-xl shadow-xl p-4 w-80 animate-slide-in">
+        <div className="absolute top-10 right-0 z-50 bg-white border border-slate-200 rounded-xl shadow-xl p-4 w-80 animate-slide-in">
           {/* Status */}
           <div className="mb-4">
             <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Status</p>
