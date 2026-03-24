@@ -76,7 +76,7 @@ export default function App() {
             </div>
 
             <div>
-              <h1 className="text-base font-bold text-slate-900 leading-tight">
+              <h1 className="text-lg font-bold text-slate-900 leading-tight">
                 Project Tracker
               </h1>
 
